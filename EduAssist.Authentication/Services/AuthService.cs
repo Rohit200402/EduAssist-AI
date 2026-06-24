@@ -1,7 +1,9 @@
+using EduAssist.Authentication.Configuration;
 using EduAssist.Authentication.DTOs;
 using EduAssist.EFCore.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace EduAssist.Authentication.Services;
 
@@ -14,15 +16,18 @@ public class AuthService : IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly ITokenService _tokenService;
+    private readonly JwtSettings _jwtSettings;
 
     public AuthService(
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
-        ITokenService tokenService)
+        ITokenService tokenService,
+        IOptions<JwtSettings> jwtSettings)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _tokenService = tokenService;
+        _jwtSettings = jwtSettings.Value;
     }
 
     /// <summary>
@@ -73,7 +78,7 @@ public class AuthService : IAuthService
         return new AuthResponseDto
         {
             Token = token,
-            Expiration = DateTime.UtcNow.AddMinutes(60),
+            Expiration = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationInMinutes),
             UserId = user.Id,
             DisplayName = user.DisplayName,
             Email = user.Email!,
@@ -120,7 +125,7 @@ public class AuthService : IAuthService
         return new AuthResponseDto
         {
             Token = token,
-            Expiration = DateTime.UtcNow.AddMinutes(60),
+            Expiration = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationInMinutes),
             UserId = user.Id,
             DisplayName = user.DisplayName,
             Email = user.Email!,
