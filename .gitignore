@@ -1,0 +1,103 @@
+# ==========================================
+# .NET / C# Ignores
+# ==========================================
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+## Rider
+.idea/
+
+## VS Code
+.vscode/
+
+## NuGet
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nupkg
+**/[Pp]ackages/*.lock.json
+
+## User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+## Build results
+*.dll
+*.exe
+*.pdb
+*.cache
+
+## Secrets - NEVER commit real keys
+appsettings.Development.json
+appsettings.Production.json
+secrets.json
+
+## User Secrets
+/root/.microsoft/usersecrets/
+
+# ==========================================
+# Angular / Node.js Ignores
+# ==========================================
+
+## Dependencies
+node_modules/
+.npm
+
+## Angular build output
+dist/
+tmp/
+.angular/
+
+## Environment files with secrets
+src/environments/environment.ts
+!src/environments/environment.example.ts
+
+## Misc
+.sass-cache/
+connect.lock
+coverage/
+libpeerconnection.log
+testem.log
+typings/
+
+## IDE - Angular
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# ==========================================
+# OS Generated Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
