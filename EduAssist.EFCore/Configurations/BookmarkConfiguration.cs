@@ -7,6 +7,9 @@ namespace EduAssist.EFCore.Configurations;
 /// <summary>
 /// Fluent API configuration for the Bookmark entity.
 /// Defines constraints, relationships, and composite unique index.
+/// 
+/// Note: UserId is a cross-database FK to ApplicationUser (Auth DB).
+/// No navigation property is configured for it — joins happen in the service layer.
 /// </summary>
 public class BookmarkConfiguration : IEntityTypeConfiguration<Bookmark>
 {
@@ -38,13 +41,7 @@ public class BookmarkConfiguration : IEntityTypeConfiguration<Bookmark>
 
         // Relationships
 
-        // Many Bookmarks belong to one User
-        builder.HasOne(b => b.User)
-            .WithMany(u => u.Bookmarks)
-            .HasForeignKey(b => b.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        // Many Bookmarks reference one AIResponse
+        // Many Bookmarks reference one AIResponse (same database)
         builder.HasOne(b => b.AIResponse)
             .WithMany(ar => ar.Bookmarks)
             .HasForeignKey(b => b.AIResponseId)

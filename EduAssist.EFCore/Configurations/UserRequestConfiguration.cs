@@ -7,6 +7,9 @@ namespace EduAssist.EFCore.Configurations;
 /// <summary>
 /// Fluent API configuration for the UserRequest entity.
 /// Defines relationships, constraints, and indexes.
+/// 
+/// Note: UserId is a cross-database FK to ApplicationUser (Auth DB).
+/// No navigation property is configured for it — joins happen in the service layer.
 /// </summary>
 public class UserRequestConfiguration : IEntityTypeConfiguration<UserRequest>
 {
@@ -36,19 +39,13 @@ public class UserRequestConfiguration : IEntityTypeConfiguration<UserRequest>
 
         // Relationships
 
-        // Many UserRequests belong to one Category
+        // Many UserRequests belong to one Category (same database)
         builder.HasOne(ur => ur.Category)
             .WithMany(c => c.UserRequests)
             .HasForeignKey(ur => ur.CategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Many UserRequests belong to one User (cross-database reference by UserId string)
-        builder.HasOne(ur => ur.User)
-            .WithMany(u => u.UserRequests)
-            .HasForeignKey(ur => ur.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        // One UserRequest has many AIResponses (regeneration supported)
+        // One UserRequest has many AIResponses (regeneration supported, same database)
         builder.HasMany(ur => ur.AIResponses)
             .WithOne(ar => ar.UserRequest)
             .HasForeignKey(ar => ar.UserRequestId)

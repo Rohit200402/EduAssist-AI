@@ -4,7 +4,10 @@ namespace EduAssist.EFCore.Models;
 
 /// <summary>
 /// Extended Identity user with additional profile fields for the Education Assistant.
-/// Stored in the Authentication Database.
+/// Stored in the Authentication Database (AuthDbContext).
+/// 
+/// Note: UserRequest and Bookmark reference this user via UserId (string FK)
+/// but live in the Core Database. No cross-database navigation properties.
 /// </summary>
 public class ApplicationUser : IdentityUser
 {
@@ -31,9 +34,4 @@ public class ApplicationUser : IdentityUser
     public string PreferredLanguage { get; set; } = "en";
 
     public int TotalQueriesAsked { get; set; } = 0;
-
-    // Navigation Properties
-    public ICollection<UserRequest> UserRequests { get; set; } = new List<UserRequest>();
-
-    public ICollection<Bookmark> Bookmarks { get; set; } = new List<Bookmark>();
 }
